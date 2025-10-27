@@ -76,7 +76,6 @@ function Profile() {
       setError('');
     } catch (err) {
       setError(err.response?.data?.message || 'ไม่สามารถดึงข้อมูลได้');
-      console.error('Error fetching user data:', err);
     } finally {
       setLoading(false);
     }

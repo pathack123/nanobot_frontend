@@ -13,9 +13,6 @@ const api = axios.create({
   timeout: 30000 // 30 seconds timeout
 });
 
-console.log('🌐 API Base URL:', BASE_URL);
-console.log('🌍 Environment:', import.meta.env.MODE);
-
 // เพิ่ม token ใน header ทุกครั้งที่เรียก API
 api.interceptors.request.use(
   (config) => {

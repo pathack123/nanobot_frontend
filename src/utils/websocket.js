@@ -12,7 +12,6 @@ class WebSocketClient {
 
   connect() {
     if (this.ws || this.isConnecting) {
-      console.log('WebSocket already connected or connecting');
       return;
     }
 
@@ -20,11 +19,9 @@ class WebSocketClient {
     const wsUrl = import.meta.env.VITE_WS_URL || 'ws://localhost:3000';
     
     try {
-      console.log(`🔌 Connecting to WebSocket: ${wsUrl}`);
       this.ws = new WebSocket(wsUrl);
 
       this.ws.onopen = () => {
-        console.log('✅ WebSocket connected');
         this.reconnectAttempts = 0;
         this.isConnecting = false;
         this.notifyListeners({
@@ -37,15 +34,13 @@ class WebSocketClient {
       this.ws.onmessage = (event) => {
         try {
           const data = JSON.parse(event.data);
-          console.log('📨 WebSocket message:', data);
           this.notifyListeners(data);
         } catch (error) {
-          console.error('Error parsing WebSocket message:', error);
+          // Error parsing WebSocket message
         }
       };
 
       this.ws.onerror = (error) => {
-        console.error('❌ WebSocket error:', error);
         this.isConnecting = false;
         this.notifyListeners({
           type: 'error',
@@ -55,7 +50,6 @@ class WebSocketClient {
       };
 
       this.ws.onclose = () => {
-        console.log('🔌 WebSocket disconnected');
         this.ws = null;
         this.isConnecting = false;
         
@@ -68,14 +62,10 @@ class WebSocketClient {
         // Auto reconnect
         if (this.reconnectAttempts < this.maxReconnectAttempts) {
           this.reconnectAttempts++;
-          console.log(`🔄 Reconnecting... (Attempt ${this.reconnectAttempts}/${this.maxReconnectAttempts})`);
           setTimeout(() => this.connect(), this.reconnectDelay);
-        } else {
-          console.error('Max reconnection attempts reached');
         }
       };
     } catch (error) {
-      console.error('Failed to create WebSocket connection:', error);
       this.isConnecting = false;
     }
   }
@@ -91,8 +81,6 @@ class WebSocketClient {
   send(data) {
     if (this.ws && this.ws.readyState === WebSocket.OPEN) {
       this.ws.send(JSON.stringify(data));
-    } else {
-      console.warn('WebSocket is not connected');
     }
   }
 
@@ -110,7 +98,7 @@ class WebSocketClient {
       try {
         callback(data);
       } catch (error) {
-        console.error('Error in WebSocket listener:', error);
+        // Error in WebSocket listener
       }
     });
   }

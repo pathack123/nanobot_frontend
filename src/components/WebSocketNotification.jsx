@@ -31,8 +31,6 @@ const WebSocketNotification = () => {
     wsClient.connect();
 
     const unsubscribe = wsClient.subscribe((data) => {
-      console.log('Received notification:', data);
-
       if (data.type === 'connection') {
         setIsConnected(data.status === 'connected');
       }

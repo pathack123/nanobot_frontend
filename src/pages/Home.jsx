@@ -70,7 +70,7 @@ function Home() {
         setCryptoData(response.data.data);
       }
     } catch (err) {
-      console.error('Error fetching crypto data:', err);
+      // Error fetching crypto data
     } finally {
       setLoading(false);
     }

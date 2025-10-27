@@ -49,7 +49,6 @@ function CryptoPrice({ symbol = 'btcusdt' }) {
 
       ws.onopen = () => {
         if (isMounted) {
-          console.log(`✅ WebSocket connected for ${symbol}`);
           setIsConnected(true);
         }
       };
@@ -61,26 +60,23 @@ function CryptoPrice({ symbol = 'btcusdt' }) {
             setPrice(parseFloat(data.c));
             setPriceChange(parseFloat(data.P));
           } catch (error) {
-            console.error(`Error parsing message for ${symbol}:`, error);
+            // Error parsing message
           }
         }
       };
 
       ws.onerror = (error) => {
         if (isMounted) {
-          console.error(`WebSocket error for ${symbol}:`, error.message || 'Connection error');
           setIsConnected(false);
         }
       };
 
       ws.onclose = () => {
         if (isMounted) {
-          console.log(`🔌 WebSocket closed for ${symbol}`);
           setIsConnected(false);
 
           reconnectTimeoutRef.current = setTimeout(() => {
             if (isMounted) {
-              console.log(`🔄 Reconnecting WebSocket for ${symbol}...`);
               connectWebSocket();
             }
           }, 3000);

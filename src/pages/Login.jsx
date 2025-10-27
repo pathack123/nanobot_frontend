@@ -214,7 +214,7 @@ function Login() {
           color="text.secondary"
           sx={{ display: 'block', textAlign: 'center', mt: 3 }}
         >
-          © 2025 Nanobot Trading Platform. All rights reserved ppp.
+          © 2025 Nanobot Trading Platform. All rights reserved .
         </Typography>
       </Container>
     </Box>

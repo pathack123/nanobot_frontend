@@ -76,7 +76,7 @@ const UserManagement = () => {
       });
       setCurrentUser(response.data.data);
     } catch (err) {
-      console.error('Error fetching current user:', err);
+      // Error fetching current user
     }
   };
 
@@ -92,7 +92,6 @@ const UserManagement = () => {
       setError('');
     } catch (err) {
       setError(err.response?.data?.message || 'ไม่สามารถดึงข้อมูลผู้ใช้ได้');
-      console.error('Error fetching users:', err);
     } finally {
       setLoading(false);
     }
