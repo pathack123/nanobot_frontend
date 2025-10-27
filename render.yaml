@@ -1,10 +1,6 @@
 services:
-  - type: web
+  - type: static
     name: nanobot-frontend
-    runtime: node
-    env: node
-    region: singapore
-    plan: free
     buildCommand: npm install && npm run build
     staticPublishPath: ./dist
     pullRequestPreviewsEnabled: true
