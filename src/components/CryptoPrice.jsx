@@ -1,4 +1,4 @@
-import { useEffect, useState, useRef } from 'react';
+import { useEffect, useState, useRef, memo } from 'react';
 import { Card, CardContent, Typography, Box, Chip, Stack, Divider } from '@mui/material';
 import { TrendingUp, TrendingDown, FiberManualRecord } from '@mui/icons-material';
 
@@ -234,4 +234,5 @@ function CryptoPrice({ symbol = 'btcusdt' }) {
   );
 }
 
-export default CryptoPrice;
+// Memoize component to prevent unnecessary re-renders
+export default memo(CryptoPrice);

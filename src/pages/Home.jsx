@@ -1,4 +1,4 @@
-import { useEffect, useState, useRef } from 'react';
+import { useEffect, useState, useRef, useMemo } from 'react';
 import { useNavigate } from 'react-router-dom';
 import {
   AppBar,
@@ -34,6 +34,9 @@ import { logout, getUser } from '../utils/auth';
 import CryptoPrice from '../components/CryptoPrice';
 import WebSocketNotification from '../components/WebSocketNotification';
 
+// Define crypto symbols outside component to prevent re-creation
+const CRYPTO_SYMBOLS = ['btcusdt', 'ethusdt', 'bnbusdt', 'adausdt', 'dogeusdt'];
+
 function Home() {
   const navigate = useNavigate();
   const [homeData, setHomeData] = useState(null);
@@ -42,16 +45,15 @@ function Home() {
   const [loading, setLoading] = useState(false);
   const [secretProgress, setSecretProgress] = useState(0);
   const [isHoldingSecret, setIsHoldingSecret] = useState(false);
-  const user = getUser();
+  const user = useMemo(() => getUser(), []);
   const secretTimerRef = useRef(null);
   const secretIntervalRef = useRef(null);
-
-  const cryptoSymbols = ['btcusdt', 'ethusdt', 'bnbusdt', 'adausdt', 'dogeusdt'];
 
   useEffect(() => {
     fetchHomeData();
     fetchCryptoData();
-  }, []);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []); // Run only once on mount
 
   const fetchHomeData = async () => {
     try {
@@ -132,7 +134,7 @@ function Home() {
   }, []);
 
   return (
-    <Box sx={{ minHeight: '100vh', bgcolor: 'background.default' }}>
+    <Box sx={{ minHeight: '100vh', bgcolor: 'background.default' }} className="page-transition-wrapper">
       {/* WebSocket Notification */}
       <WebSocketNotification />
 
@@ -258,7 +260,7 @@ function Home() {
             <Divider sx={{ mb: 3 }} />
 
             <Grid container spacing={2}>
-              {cryptoSymbols.map((symbol) => (
+              {CRYPTO_SYMBOLS.map((symbol) => (
                 <Grid item xs={12} sm={6} lg={4} key={symbol}>
                   <CryptoPrice symbol={symbol} />
                 </Grid>

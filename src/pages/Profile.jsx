@@ -137,7 +137,7 @@ function Profile() {
   }
 
   return (
-    <Box sx={{ minHeight: '100vh', bgcolor: 'background.default' }}>
+    <Box sx={{ minHeight: '100vh', bgcolor: 'background.default' }} className="page-transition-wrapper">
       {/* Top Navigation Bar */}
       <AppBar position="sticky" elevation={0}>
         <Toolbar>
